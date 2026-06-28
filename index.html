@@ -1,52 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>One Tiny Question ❤️</title>
 
-    <!-- MOBILE SAFE VIEW -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+</head>
 
-    <title>One Tiny Question ❤️</title>
+<body>
 
-    <meta name="description" content="A romantic interactive experience ❤️" />
-    <meta name="theme-color" content="#ff6b9d" />
+<div class="screen active" id="screen1">
+  <div class="card">
+    <h1>Hey you 👀</h1>
+    <p>A tiny question is waiting...</p>
+    <button onclick="next(2)">Open 💌</button>
+  </div>
+</div>
 
-    <!-- OPEN GRAPH (sharing preview) -->
-    <meta property="og:title" content="One Tiny Question ❤️" />
-    <meta property="og:description" content="A romantic interactive experience" />
-    <meta property="og:type" content="website" />
+<div class="screen" id="screen2">
+  <div class="card">
+    <p id="typeText"></p>
+    <button onclick="next(3)">Continue ❤️</button>
+  </div>
+</div>
 
-    <!-- FAVICON (safe fallback) -->
-    <link rel="icon" href="data:,">
+<div class="screen" id="screen3">
+  <div class="card">
+    <h2>Will you go on a date with me? 🌹</h2>
 
-    <!-- GOOGLE FONT -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <div class="btnRow">
+      <button id="yesBtn" onclick="yes()">YES ❤️</button>
+      <button id="noBtn" onclick="no()">No 🙈</button>
+    </div>
 
-    <!-- HTML2CANVAS (for screenshot feature later) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <p id="reaction"></p>
+  </div>
+</div>
 
-    <style>
-      body {
-        margin: 0;
-        background: #fff0f5;
-        font-family: 'Poppins', sans-serif;
-      }
+<div class="screen" id="screen4">
+  <div class="card">
+    <h2>📅 Plan Our Date</h2>
 
-      /* Prevent white flash on load */
-      #root {
-        min-height: 100vh;
-        width: 100%;
-      }
-    </style>
-  </head>
+    <input type="date" id="date"/>
+    <input type="time" id="time"/>
 
-  <body>
-    <!-- React mounts here -->
-    <div id="root"></div>
+    <h3>Choose Type</h3>
 
-    <!-- VITE ENTRY POINT -->
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <div class="grid" id="activities"></div>
+
+    <h3>Complimentary 💞</h3>
+
+    <div class="grid" id="comp"></div>
+
+    <textarea id="note" placeholder="A sweet note..."></textarea>
+
+    <button onclick="confirmDate()">Confirm 💖</button>
+  </div>
+</div>
+
+<div class="screen" id="screen5">
+  <div class="card">
+    <h1>💖 DATE CONFIRMED</h1>
+
+    <div id="summary"></div>
+
+    <button onclick="download()">📸 Download Pass</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
