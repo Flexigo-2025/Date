@@ -606,4 +606,108 @@ document
 },3200);
 
 });
+/* ==========================================
+FINAL PREMIUM SCENE ❤️
+========================================== */
+
+function finalScene(){
+
+createConfetti();
+
+document.body.innerHTML=`
+
+<div class="finalPage">
+
+<div class="sunsetGlow"></div>
+
+<h1 class="finalTitle">
+
+🌅 Our Little Adventure Begins...
+
+</h1>
+
+<p class="finalText">
+
+One coffee.
+
+One walk.
+
+A few terrible jokes.
+
+Lots of random conversations.
+
+And hopefully...
+
+one memory
+
+that randomly makes us smile
+
+months from now.
+
+❤️
+
+</p>
+
+<div class="datePass">
+
+<h2>
+
+✨ PREMIUM DATE PASS ✨
+
+</h2>
+
+<div class="passLine"></div>
+
+<p>
+
+👩 VIP Guest
+
+<br><br>
+
+☕ Unlimited Conversations
+
+<br>
+
+🍰 Dessert Sharing Rights
+
+<br>
+
+😂 Unlimited Laughs
+
+<br>
+
+🌇 Sunset Included
+
+<br>
+
+❤️ Great Company Guaranteed
+
+</p>
+
+<div class="passLine"></div>
+
+<p>
+
+Valid For:
+
+One unforgettable evening.
+
+</p>
+
+</div>
+
+<button
+class="btn btn-primary btn-large"
+
+onclick="location.reload()">
+
+❤️ Replay Our Story
+
+</button>
+
+</div>
+
+`;
+
+}
                         
