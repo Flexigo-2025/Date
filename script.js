@@ -599,9 +599,12 @@ class="btn btn-primary btn-large">
 
 createConfetti();
 
-document
-.getElementById("beginAdventure")
-.addEventListener("click",finalScene);
+document.getElementById("beginAdventure")
+.addEventListener("click", () => {
+
+    showScreen(3); // this will be screen-4 visually
+
+});
 
 },3200);
 
@@ -710,4 +713,79 @@ onclick="location.reload()">
 `;
 
 }
-                        
+
+        /* ADD SCREEN 4 SUPPORT */
+const screen4 = document.querySelector(".screen-4"); 
+let selectedPlan = "";
+
+/* PLAN SELECT */
+document.addEventListener("click", (e) => {
+
+    if (e.target.classList.contains("option")) {
+
+        document.querySelectorAll(".option").forEach(o =>
+            o.classList.remove("active")
+        );
+
+        e.target.classList.add("active");
+        selectedPlan = e.target.innerText;
+
+    }
+});
+document.addEventListener("click", (e) => {
+
+    if (e.target.id === "confirmDateBtn") {
+
+        const date = document.getElementById("datePicker").value;
+        const time = document.getElementById("timePicker").value;
+
+        if (!date || !time || !selectedPlan) {
+            alert("Complete everything ❤️");
+            return;
+        }
+
+        e.target.innerText = "Reserving... ❤️";
+
+        setTimeout(() => {
+
+            document.body.innerHTML = `
+
+            <div class="finalPage">
+
+                <div class="sunsetGlow"></div>
+
+                <h1 class="finalTitle">
+                    🌸 Date Confirmed
+                </h1>
+
+                <div class="datePass">
+
+                    <h2>✨ VIP DATE PASS ✨</h2>
+
+                    <div class="passLine"></div>
+
+                    <p>
+                    📅 ${date}<br>
+                    🕒 ${time}<br>
+                    💕 ${selectedPlan}
+                    </p>
+
+                    <div class="passLine"></div>
+
+                    <p>
+                    Status: CONFIRMED ❤️
+                    </p>
+
+                </div>
+
+                <button class="btn btn-primary" onclick="finalScene()">
+                    🌅 Continue Story
+                </button>
+
+            </div>
+
+            `;
+
+        }, 2500);
+    }
+});
