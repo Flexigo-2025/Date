@@ -1,6 +1,6 @@
 /* ==========================================
    ONE TINY QUESTION ❤️
-   PART 1
+   PREMIUM VERSION - PART 1
 ========================================== */
 
 const screens = document.querySelectorAll(".screen");
@@ -17,28 +17,144 @@ const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 
 let currentScreen = 0;
-
 let hmmClicks = 0;
 
-const romanticLines = [
+const stories = [
 
-"Awww... don't make me use my best flirting skills already. 🥺❤️",
+{
+button:"🙈 Hmm...",
+title:"🤍 Little Secret #1",
+text:`
+Good conversations are rare...
 
-"I may or may not have already picked a café where we can argue about desserts. 🍰😌",
+Yet somehow...
 
-"Imagine us laughing over absolutely nothing... sounds like a pretty good day, doesn't it? ✨",
+ours never feel long enough.
 
-"My little heart keeps whispering... 'Maybe she'll say yes this time.' 🥺❤️",
+Maybe...
 
-"One coffee ☕ One walk 🌇 One beautiful memory ❤️",
+it's time we continue one
 
-"Okay okay... last try... pretty please? 🥺👉👈"
+over coffee instead. ☕❤️`
+},
+
+{
+button:"🤔 Still Thinking...",
+title:"🌸 Little Promise #2",
+text:`
+You choose the café.
+
+I'll happily pretend
+
+your coffee order
+
+doesn't confuse me...
+
+and I promise
+
+not to steal your dessert.
+
+...unless it looks amazing. 🍰😏`
+},
+
+{
+button:"😅 Maybe...",
+title:"✨ Tiny Confession #3",
+text:`
+I genuinely believe...
+
+one random evening
+
+with you
+
+could become
+
+one of those memories
+
+we randomly smile about
+
+months later. 🌇❤️`
+},
+
+{
+button:"🙃 Convince Me...",
+title:"😂 Friendly Deal #4",
+text:`
+If I don't make you laugh
+
+at least three times...
+
+Dessert
+
+is completely on me.
+
+That's an official deal. 🤝🍰`
+},
+
+{
+button:"🤭 One More...",
+title:"💖 Honest Truth #5",
+text:`
+I can't promise perfection.
+
+But I CAN promise...
+
+good conversations,
+
+terrible jokes,
+
+lots of laughs,
+
+and a day
+
+worth remembering. ❤️`
+},
+
+{
+button:"🥺 Last Chance...",
+title:"🌹 Final Reason",
+text:`
+I've officially
+
+run out of clever reasons...
+
+because the biggest one
+
+is actually
+
+very simple.
+
+I'd really...
+
+really enjoy
+
+spending that day
+
+with you. ❤️`
+}
 
 ];
 
+const yesTexts=[
+
+"❤️ Yes!",
+
+"💕 Maybe Yes",
+
+"🥰 Sounds Nice",
+
+"☕ Coffee? Sure!",
+
+"🌸 Let's Go",
+
+"💖 You Win",
+
+"❤️ Okay... Yes"
+
+];
 
 /* ==============================
-   Screen Change
+SCREEN CHANGE
 ============================== */
 
 function showScreen(index){
@@ -55,11 +171,6 @@ currentScreen=index;
 
 }
 
-
-/* ==============================
-   Buttons
-============================== */
-
 startBtn.addEventListener("click",()=>{
 
 showScreen(1);
@@ -68,16 +179,14 @@ playMusic();
 
 });
 
-
 nextBtn.addEventListener("click",()=>{
 
 showScreen(2);
 
 });
 
-
 /* ==============================
-   Music
+MUSIC
 ============================== */
 
 let musicPlaying=false;
@@ -86,7 +195,7 @@ function playMusic(){
 
 if(!musicPlaying){
 
-music.play();
+music.play().catch(()=>{});
 
 musicPlaying=true;
 
@@ -102,9 +211,7 @@ music.play();
 
 musicBtn.innerHTML="🎵";
 
-}
-
-else{
+}else{
 
 music.pause();
 
@@ -115,318 +222,302 @@ musicBtn.innerHTML="🔇";
 });
 
 /* ==========================================
-   HMM BUTTON MAGIC ❤️
+HMM BUTTON
 ========================================== */
 
-hmmBtn.addEventListener("click", () => {
+hmmBtn.addEventListener("click",()=>{
 
-    if(hmmClicks < romanticLines.length){
+if(hmmClicks<stories.length){
 
-        message.innerHTML = romanticLines[hmmClicks];
+message.innerHTML=`
 
-    }
+<h3>${stories[hmmClicks].title}</h3>
 
-    hmmClicks++;
+<p>${stories[hmmClicks].text}</p>
 
-    // Yes button becomes larger
-    let scale = 1 + (hmmClicks * 0.12);
-    yesBtn.style.transform = `scale(${scale})`;
+`;
 
-    // Hmm button becomes smaller
-    let hmmScale = Math.max(0.35, 1 - (hmmClicks * 0.12));
-    hmmBtn.style.transform = `scale(${hmmScale})`;
+hmmBtn.innerHTML=stories[hmmClicks].button;
 
-    // Move Hmm button randomly
+}
 
-    const x = Math.random() * 180 - 90;
-    const y = Math.random() * 120 - 60;
+/* YES grows slowly */
 
-    hmmBtn.style.left = `${x}px`;
-    hmmBtn.style.top = `${y}px`;
+let scale=Math.min(1.30,1+hmmClicks*0.05);
 
-    // Background slowly becomes dreamier
+yesBtn.style.transform=`scale(${scale})`;
 
-    document.body.style.background = `
-    linear-gradient(
-    135deg,
-    #ffd6ea,
-    #f3d9ff,
-    #ffe8f3,
-    #fff5d9
-    )
-    `;
+if(hmmClicks<yesTexts.length){
 
-    // Tiny Heart Pop ❤️
+yesBtn.innerHTML=yesTexts[hmmClicks];
 
-    createHeart();
+}
 
-    // Last Click
+/* NO shrinks slowly */
 
-    if(hmmClicks >= romanticLines.length){
+let noScale=Math.max(0.20,1-hmmClicks*0.12);
 
-        message.innerHTML =
+hmmBtn.style.transform=`scale(${noScale})`;
 
-        "🥺❤️ At this point...<br><br>I think even the stars are waiting for a Yes.";
+/* Safe mobile movement */
 
-        hmmBtn.innerHTML = "🙈 Oops...";
+const positions=[
 
-    }
+{x:0,y:0},
+
+{x:20,y:-10},
+
+{x:-20,y:10},
+
+{x:25,y:18},
+
+{x:-25,y:-18},
+
+{x:12,y:-22},
+
+{x:-12,y:22}
+
+];
+
+const p=positions[hmmClicks%positions.length];
+
+hmmBtn.style.position="relative";
+
+hmmBtn.style.left=p.x+"px";
+
+hmmBtn.style.top=p.y+"px";
+
+/* Dreamier background */
+
+document.body.style.background=`
+linear-gradient(
+135deg,
+#ffe4ef,
+#f7e8ff,
+#fff8eb,
+#ffeff8
+)`;
+
+/* Floating heart */
+
+createHeart();
+
+hmmClicks++;
+/* ==============================
+SPECIAL ENDINGS
+============================== */
+
+if(hmmClicks==6){
+
+message.innerHTML=`
+
+<h3>🥺 Uh Oh...</h3>
+
+<p>
+
+My <b>"No"</b> button...
+
+has started losing confidence.
+
+<br><br>
+
+I think it's secretly hoping
+
+you'll give me
+
+one tiny chance. ❤️
+
+</p>
+
+`;
+
+}
+
+if(hmmClicks==7){
+
+message.innerHTML=`
+
+<h3>🌸 Tiny Confession</h3>
+
+<p>
+
+This little button
+
+pulled me aside...
+
+and whispered...
+
+<br><br>
+
+<b>
+
+"I'd honestly press Yes
+
+if I could."
+
+</b>
+
+🥺❤️
+
+</p>
+
+`;
+
+hmmBtn.style.opacity="0.35";
+
+}
+
+if(hmmClicks>=8){
+
+message.innerHTML=`
+
+<h3>💖 Final Little Reason</h3>
+
+<p>
+
+Looks like...
+
+the <b>No</b> button
+
+has officially retired.
+
+<br><br>
+
+It simply couldn't find
+
+enough reasons
+
+to stay.
+
+<br><br>
+
+Maybe...
+
+it's time
+
+we create
+
+one beautiful memory
+
+together. ❤️✨
+
+</p>
+
+`;
+
+hmmBtn.style.display="none";
+
+yesBtn.style.transform="scale(1.35)";
+
+yesBtn.innerHTML="💖 Yes... Let's Make A Memory";
+
+}
 
 });
 
-
 /* ==========================================
-   HEART POP EFFECT
+FLOATING HEART EFFECT
 ========================================== */
 
 function createHeart(){
 
-    const heart=document.createElement("div");
+const emojis=[
 
-    heart.innerHTML="❤️";
+"❤️",
 
-    heart.style.position="fixed";
+"💖",
 
-    heart.style.left=Math.random()*window.innerWidth+"px";
+"💕",
 
-    heart.style.top=(window.innerHeight-100)+"px";
+"🌸",
 
-    heart.style.fontSize=(20+Math.random()*20)+"px";
+"✨"
 
-    heart.style.pointerEvents="none";
+];
 
-    heart.style.transition="2.5s ease";
+const heart=document.createElement("div");
 
-    document.body.appendChild(heart);
+heart.innerHTML=
 
-    setTimeout(()=>{
+emojis[Math.floor(Math.random()*emojis.length)];
 
-        heart.style.transform=
-        "translateY(-350px) scale(1.8)";
+heart.style.position="fixed";
 
-        heart.style.opacity="0";
+heart.style.left=Math.random()*window.innerWidth+"px";
 
-    },50);
+heart.style.top=(window.innerHeight-80)+"px";
 
-    setTimeout(()=>{
+heart.style.fontSize=(20+Math.random()*20)+"px";
 
-        heart.remove();
+heart.style.pointerEvents="none";
 
-    },2500);
+heart.style.transition="2.5s ease";
+
+heart.style.zIndex="999";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.style.transform=`
+translateY(-${250+Math.random()*150}px)
+rotate(${Math.random()*180-90}deg)
+scale(2)
+`;
+
+heart.style.opacity="0";
+
+},50);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},2600);
+
+}
+/* ==========================================
+   YES BUTTON ❤️
+========================================== */
+
+yesBtn.addEventListener("click",()=>{
+
+// Heart burst
+
+for(let i=0;i<25;i++){
+
+createHeart();
 
 }
 
-/* ==========================================
-   YES BUTTON CELEBRATION ❤️
-========================================== */
+// Fade screen
 
-yesBtn.addEventListener("click", () => {
+document.querySelector(".ask-content").style.animation=
+"fadeOut 0.8s forwards";
 
-    // Hide question
-    document.querySelector(".ask-content").innerHTML = `
+setTimeout(()=>{
 
-        <h2 style="font-size:38px;color:#ff4fa3;">
-            Processing the best decision of today... ✨
-        </h2>
+document.querySelector(".ask-content").innerHTML=`
 
-        <br>
+<div class="celebrate">
 
-        <div class="loader">
+<h2 class="loaderTitle">
 
-            <div class="loader-fill"></div>
-
-        </div>
-
-        <br>
-
-        <p style="font-size:20px;color:#666;">
-            Just getting everything ready... ❤️
-        </p>
-
-    `;
-
-    createConfetti();
-
-    setTimeout(() => {
-
-        document.querySelector(".ask-content").innerHTML = `
-
-        <h1 style="
-        font-size:58px;
-        color:#ff3d93;
-        margin-bottom:20px;
-        ">
-
-        YAYYY!! ❤️
-
-        </h1>
-
-        <p style="
-        font-size:22px;
-        line-height:1.8;
-        color:#555;
-        ">
-
-        You just made my day a whole lot brighter. ☀️
-
-        <br><br>
-
-        I promise...
-
-        lots of laughs 😂
-
-        good food 🍕🍰
-
-        random conversations ☕
-
-        and hopefully...
-
-        one beautiful memory we'll both smile about later. 🌸
-
-        </p>
-
-        <br><br>
-
-        <button
-        id="finalBtn"
-        class="btn btn-primary">
-
-        Let's Plan Our Date ✨
-
-        </button>
-
-        `;
-
-        document.getElementById("finalBtn")
-        .addEventListener("click", finalScene);
-
-    },2500);
-
-});
-
-
-/* ==========================================
-   FINAL SCENE
-========================================== */
-
-function finalScene(){
-
-document.body.innerHTML=`
-
-<div style="
-
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-
-height:100vh;
-
-text-align:center;
-
-background:
-linear-gradient(
-135deg,
-#ffcadf,
-#ffd9a8,
-#ffeec9,
-#fff7ef);
-
-font-family:Poppins;
-
-padding:30px;
-
-">
-
-<h1 style="
-
-font-size:52px;
-
-color:#ff3d93;
-
-margin-bottom:25px;
-
-">
-
-🌅
-
-</h1>
-
-<h2 style="
-
-font-size:34px;
-
-color:#444;
-
-">
-
-Our first adventure officially begins now... ❤️
+✨ Processing the happiest decision of today... ✨
 
 </h2>
 
-<p style="
+<div class="loveLoader">
 
-margin-top:25px;
+<div class="loveFill"></div>
 
-font-size:22px;
+</div>
 
-line-height:1.8;
+<p class="loaderText">
 
-color:#555;
+Reserving one unforgettable memory...
 
-max-width:700px;
-
-">
-
-Here's to one coffee...
-
-one walk...
-
-countless laughs...
-
-and a memory we'll randomly remember months from now with a smile. 🌸
-
-</p>
-
-<h3 style="
-
-margin-top:45px;
-
-color:#ff4fa3;
-
-font-size:28px;
-
-">
-
-Date Ticket 🎫
-
-</h3>
-
-<p style="
-
-font-size:20px;
-
-margin-top:15px;
-
-">
-
-✅ Valid For:
-
-<br><br>
-
-☕ One Coffee
-
-<br>
-
-🌇 One Walk
-
-<br>
-
-😂 Unlimited Laughs
-
-<br>
-
-❤️ Great Company
+☕❤️🌇
 
 </p>
 
@@ -434,48 +525,85 @@ margin-top:15px;
 
 `;
 
-}
-
-
-/* ==========================================
-   SIMPLE CONFETTI
-========================================== */
-
-function createConfetti(){
-
-for(let i=0;i<150;i++){
-
-const conf=document.createElement("div");
-
-conf.innerHTML=["❤️","🌸","✨","💖","🎉"][Math.floor(Math.random()*5)];
-
-conf.style.position="fixed";
-
-conf.style.left=Math.random()*100+"vw";
-
-conf.style.top="-50px";
-
-conf.style.fontSize=(16+Math.random()*20)+"px";
-
-conf.style.transition="4s linear";
-
-document.body.appendChild(conf);
+},700);
 
 setTimeout(()=>{
 
-conf.style.transform=`translateY(${window.innerHeight+100}px)
-rotate(${Math.random()*720}deg)`;
+document.querySelector(".ask-content").innerHTML=`
 
-conf.style.opacity="0";
+<div class="celebrate">
 
-},50);
+<h1 class="yay">
 
-setTimeout(()=>{
+YAYYYYY!! ❤️
 
-conf.remove();
+</h1>
 
-},4200);
+<h2>
 
-}
+You just made my entire day brighter.
 
-}
+☀️
+
+</h2>
+
+<br>
+
+<p>
+
+Here's my little promise...
+
+</p>
+
+<br>
+
+<p>
+
+😂 Terrible jokes.
+
+<br>
+
+☕ Endless conversations.
+
+<br>
+
+🍰 Dessert negotiations.
+
+<br>
+
+🌇 A beautiful evening.
+
+<br>
+
+❤️ And hopefully...
+
+the first of many wonderful memories.
+
+</p>
+
+<br><br>
+
+<button
+
+id="beginAdventure"
+
+class="btn btn-primary btn-large">
+
+🌸 Begin Our Little Adventure
+
+</button>
+
+</div>
+
+`;
+
+createConfetti();
+
+document
+.getElementById("beginAdventure")
+.addEventListener("click",finalScene);
+
+},3200);
+
+});
+                        
